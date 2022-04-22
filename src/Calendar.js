@@ -3,6 +3,7 @@ import "./Calendar.css";
 import DayInMonth from "./DayInMonth";
 
 const divideByDay = appointments => {
+  sortAppointments(appointments);
   const appointmentsByDay = {};
   appointments.forEach(appointment => {
     const day = appointment.day;
@@ -11,12 +12,18 @@ const divideByDay = appointments => {
     }
     appointmentsByDay[day].push(appointment);
   });
+
   return appointmentsByDay;
+};
+
+const sortAppointments = appointments => {
+  appointments.sort((a, b) => {
+    return a.time - b.time;
+  })
 };
 
 export default ({ appointments }) => {
   const appointmentsByDay = divideByDay(appointments);
-
   const daysInMonthJSX = Object.values(
     appointmentsByDay
   ).map((appointmentsInDay, index) => (

@@ -5,7 +5,6 @@ const format_time = time => (time < 10 ? `0${time}:00u` : `${time}:00u`);
 export default ({ time, patient }) => (
   <div className="appointment">
     <span className="time">{format_time(time)}</span>
-    {console.log(patient)}
     <span className="patient">{patient.firstName + " " + patient.lastName}</span>
   </div>
 );

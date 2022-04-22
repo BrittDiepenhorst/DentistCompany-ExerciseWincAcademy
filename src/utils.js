@@ -1016,7 +1016,6 @@ const emails = [
 
 const generateEmail = (email) => {
   let index = Math.floor(Math.random() * emails.length);
-  console.log(`We chose word: ${emails[index]}`);
   return emails[index];
 };
 
@@ -1063,13 +1062,8 @@ const generateEmployee = () => {
     ...person,
     ...employeeDetails
   }
-  console.log(employee)
   return employee;
 };
-
-// const NUM_DENTISTS = 4;
-// const NUM_ASSISTANTS = 2;
-// const NUM_PATIENTS = 50;
 
 // DATE
 const getRandomTime = () => {
