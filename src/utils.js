@@ -991,11 +991,87 @@ const names = [
   },
 ];
 
-const getRandomName = () => {
+// PERSON
+// const getRandomName = () => {
+//   const person = names[Math.floor(Math.random() * 250)];
+//   return `${person.name} ${person.surname}`;
+// };
+
+const getRandomFirstName = () => {
   const person = names[Math.floor(Math.random() * 250)];
-  return `${person.name} ${person.surname}`;
+  return `${person.name}`;
 };
 
+const getRandomLastName = () => {
+  const person = names[Math.floor(Math.random() * 250)];
+  return `${person.surname}`;
+};
+
+const emails = [
+  "@gmail.com",
+  "@hotmail.com",
+  "@ziggo.nl",
+  "@outlook.com"
+];
+
+const generateEmail = (email) => {
+  let index = Math.floor(Math.random() * emails.length);
+  console.log(`We chose word: ${emails[index]}`);
+  return emails[index];
+};
+
+const generateUniqueID = () => {
+  return Math.random();
+};
+
+const getRandomDate = () => {
+  const maxDate = Date.now();
+  const timestamp = Math.floor(Math.random() * maxDate);
+  return new Date(timestamp);
+};
+
+const generatePerson = () => {
+  const generatePerson = {
+    firstName: getRandomFirstName(),
+    lastName: getRandomLastName(),
+    id: generateUniqueID(),
+    phoneNumber: "06" + Math.floor(Math.random() * 100000000),
+    sick: false,
+  }
+  return generatePerson;
+};
+
+const generatePatient = () => {
+  const person = generatePerson()
+  const patientDetails = {
+    email: person.firstName.split(' ')[0] + person.lastName + generateEmail(),
+    birthday: getRandomDate(),
+  }
+  const patient = {
+    ...person,
+    ...patientDetails
+  }
+  return patient;
+};
+
+const generateEmployee = () => {
+  const person = generatePerson()
+  const employeeDetails = {
+    email: person.firstName.split('')[0] + "." + person.lastName + "@dentistcompanybvt.com",
+  }
+  const employee = {
+    ...person,
+    ...employeeDetails
+  }
+  console.log(employee)
+  return employee;
+};
+
+// const NUM_DENTISTS = 4;
+// const NUM_ASSISTANTS = 2;
+// const NUM_PATIENTS = 50;
+
+// DATE
 const getRandomTime = () => {
   let hour;
   while (true) {
@@ -1008,12 +1084,13 @@ const getRandomTime = () => {
 
 const getRandomDay = () => Math.floor(Math.random() * 28) + 1;
 
+// APPOINTMENT 
 const generateRandomAppointment = () => ({
   day: getRandomDay(),
   time: getRandomTime(),
-  patient: getRandomName(),
-  dentist: getRandomName(),
-  assistant: getRandomName(),
+  patient: generatePatient(),
+  dentist: generateEmployee(),
+  assistant: generateEmployee(),
 });
 
 const generateRandomAppointments = num =>
