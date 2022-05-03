@@ -19,6 +19,10 @@ console.log(appointments);
 
 function App() {
   // const [appointments, setAppointments] = useState([{}])
+  const [appointment, setAppointment] = useState({ appointments });
+  const [dentist, setDentist] = useState();
+  const [assistant, setAssistant] = useState();
+  const [patient, setPatient] = useState();
 
   return (
     < Router >
