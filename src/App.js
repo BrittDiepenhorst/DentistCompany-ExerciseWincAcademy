@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -7,23 +7,10 @@ import Calendar from "./Calendar";
 import Day from "./Day";
 import Changes from "./Changes";
 
-import generateRandomAppointments from "./utils";
-
-const NUM_APPOINTMENTS = 150;
-const appointments = generateRandomAppointments(NUM_APPOINTMENTS);
-console.log(appointments);
-
-// const NUM_DENTISTS = 4;
-// const NUM_ASSISTANTS = 2;
-// const NUM_PATIENTS = 50;
+import generateRandomAppointments from "./utils/utils"
+const appointments = generateRandomAppointments(150);
 
 function App() {
-  // const [appointments, setAppointments] = useState([{}])
-  const [appointment, setAppointment] = useState({ appointments });
-  const [dentist, setDentist] = useState();
-  const [assistant, setAssistant] = useState();
-  const [patient, setPatient] = useState();
-
   return (
     < Router >
       <div>

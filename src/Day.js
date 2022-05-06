@@ -8,7 +8,7 @@ const sortAppointments = appointments => {
   })
 };
 
-export default ({ appointments }) => {
+const Day = ({ appointments }) => {
   sortAppointments(appointments);
   const appointmentsJSX = appointments.map(
     ({ time, patient, dentist, assistant }, index) => (
@@ -23,3 +23,5 @@ export default ({ appointments }) => {
   );
   return <ul className="dayview">{appointmentsJSX}</ul>;
 };
+
+export default Day;

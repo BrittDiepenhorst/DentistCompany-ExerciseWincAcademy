@@ -2,7 +2,7 @@ import React from "react";
 
 const format_time = time => (time < 10 ? `0${time}:00u` : `${time}:00u`);
 
-export default ({ time, patient, dentist, assistant }) => {
+const AppointmentInDay = ({ time, patient, dentist, assistant }) => {
   return (
     <li className="appointment">
       <div className="time">{format_time(time)}</div>
@@ -12,3 +12,5 @@ export default ({ time, patient, dentist, assistant }) => {
     </li>
   )
 };
+
+export default AppointmentInDay;
