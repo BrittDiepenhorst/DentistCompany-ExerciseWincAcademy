@@ -3,29 +3,28 @@ import React, { useState } from "react";
 
 function ChangeCalendar({ appointments }) {
     console.log(appointments);
-    const [employee, setEmployee] = useState({
-        firstName: "",
-        lastName: "",
-        id: "",
-        phoneNumber: "",
-        sick: false,
-        email: "",
-    });
+    const [employee, setEmployee] = useState({});
 
-    const makeSick = () => {
-        console.log('You clicked submit.')
-        console.log(employee)
+    const makeSick = (employee) => {
+        console.log('You clicked submit.');
+        console.log(employee);
+        // setEmployee(employee.sick = true);
+        // console.log(employee);
     };
 
     const handleChange = (e) => {
         e.preventDefault();
-        setEmployee((prev) => ({
-            ...prev,
-            [e.target]: (e.target.value),
-            // [e.target.id]: (e.target.value.id),
-        }))
-        console.log(e.target.value)
-        console.log(e.target)
+        const appointment = appointments.find(appointment => appointment.dentist.firstName + " " + appointment.dentist.lastName === e.target.value)
+        const dentist = appointment.dentist;
+        console.log(dentist);
+        console.log(appointment);
+        console.log(appointment.dentist);
+        console.log(appointment.dentist.id)
+        setEmployee({
+            ...employee,
+            dentist
+        });
+        // console.log(e.target.value)
     };
 
     const addPatient = (e) => {
@@ -45,7 +44,7 @@ function ChangeCalendar({ appointments }) {
                     <h3>Sickness notification employee</h3>
                     <select type="select" name="sick" placeholder="sick" onChange={handleChange}>
                         {appointments.map(appointment => (
-                            <option key={appointment.dentist.id} id={appointment.dentist.id} appointment={appointment}>{appointment.dentist.firstName + " " + appointment.dentist.lastName}</option>
+                            <option key={appointment.dentist.id} id={appointment.dentist.id} >{appointment.dentist.firstName + " " + appointment.dentist.lastName}</option>
                         ))}
                     </select>
                     <button onClick={() => makeSick(employee)}>Submit</button>
