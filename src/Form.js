@@ -24,6 +24,16 @@ function Form({ appointments, addPatient, makeSick }) {
             <div>
                 <h1>Changes for employees</h1>
 
+                <div>
+                    <h3>Sickness notification employee</h3>
+                    <select type="select" name="sick" placeholder="sick" onChange={handleChange}>
+                        {appointments.map(appointment => (
+                            <option key={appointment.dentist.id} id={appointment.dentist.id}>{appointment.dentist.firstName + " " + appointment.dentist.lastName}</option>
+                        ))}
+                    </select>
+                    <button onClick={() => makeSick(employee)}>Submit</button>
+                </div>
+
                 <br />
 
                 <div>
