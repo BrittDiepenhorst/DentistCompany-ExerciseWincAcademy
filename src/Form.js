@@ -1,21 +1,73 @@
 import React, { useState } from "react";
 
-function Form({ appointments, addPatient, makeSick }) {
+function Form({ appointments, addPatient, addDentist, makeDentistSick, makePatientSick, makeAssistantSick }) {
     console.log(appointments);
 
-    const [employee, setEmployee] = useState({});
+    const [dentist, setDentist] = useState({});
+    const [patient, setPatient] = useState({});
+    const [assistant, setAssistant] = useState({});
+    const [personToAdd, setPerson] = useState({
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: "",
+    });
 
-    const handleChange = (e) => {
+    const [dentistPersonToAdd, setDentistPerson] = useState({
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: "",
+    });
+
+    const handleChangeDentist = (e) => {
         e.preventDefault();
         const appointment = appointments.find(appointment => appointment.dentist.firstName + " " + appointment.dentist.lastName === e.target.value);
         const dentist = appointment.dentist;
-        console.log(dentist);
-        console.log(appointment);
-        console.log(appointment.dentist);
-        console.log(appointment.dentist.id);
-        setEmployee({
-            ...employee,
+        console.log(dentist, appointment, appointment.dentist, appointment.dentist.id);
+        setDentist({
+            ...dentist,
             dentist
+        });
+    };
+
+    const handleChangePatient = (e) => {
+        e.preventDefault();
+        const appointment = appointments.find(appointment => appointment.patient.firstName + " " + appointment.patient.lastName === e.target.value);
+        const patient = appointment.patient;
+        console.log(patient, appointment, appointment.patient, appointment.patient.id);
+        setPatient({
+            ...patient,
+            patient
+        });
+    };
+
+    const handleChangeAssistant = (e) => {
+        e.preventDefault();
+        const appointment = appointments.find(appointment => appointment.assistant.firstName + " " + appointment.assistant.lastName === e.target.value);
+        const assistant = appointment.assistant;
+        console.log(assistant, appointment, appointment.assistant, appointment.assistant.id);
+        setAssistant({
+            ...assistant,
+            assistant
+        });
+    };
+
+    const generateUniqueID = () => {
+        return Math.random();
+    };
+
+    const handleChangeAddPerson = (e) => {
+        setPerson({
+            ...personToAdd, [e.target.name]: e.target.value,
+            id: generateUniqueID(),
+        });
+    };
+
+    const handleChangeAddDentist = (e) => {
+        setDentistPerson({
+            ...dentistPersonToAdd, [e.target.name]: e.target.value,
+            id: generateUniqueID(),
         });
     };
 
@@ -25,24 +77,44 @@ function Form({ appointments, addPatient, makeSick }) {
                 <h1>Changes for employees</h1>
 
                 <div>
-                    <h3>Sickness notification employee</h3>
-                    <select type="select" name="sick" placeholder="sick" onChange={handleChange}>
+                    <h3>Sickness notification dentist</h3>
+                    <select type="select" name="sick" placeholder="sick" onChange={handleChangeDentist}>
                         {appointments.map(appointment => (
-                            <option key={appointment.dentist.id} id={appointment.dentist.id}>{appointment.dentist.firstName + " " + appointment.dentist.lastName}</option>
+                            <option
+                                key={appointment.dentist.id}
+                                id={appointment.dentist.id}>
+                                {appointment.dentist.firstName + " " + appointment.dentist.lastName}
+                            </option>
                         ))}
                     </select>
-                    <button onClick={() => makeSick(employee)}>Submit</button>
+                    <button onClick={() => makeDentistSick(dentist)}>Submit</button>
+                </div>
+
+                <br />
+
+                <div>
+                    <h3>Sickness notification assistant</h3>
+                    <select type="select" name="sick" placeholder="sick" onChange={handleChangeAssistant}>
+                        {appointments.map(appointment => (
+                            <option
+                                key={appointment.assistant.id}
+                                id={appointment.assistant.id}>
+                                {appointment.assistant.firstName + " " + appointment.assistant.lastName}
+                            </option>
+                        ))}
+                    </select>
+                    <button onClick={() => makeAssistantSick(assistant)}>Submit</button>
                 </div>
 
                 <br />
 
                 <div>
                     <h3>Add Dentist</h3>
-                    <input type="text" name="addDentist" placeholder="First Name"></input>
-                    <input type="text" name="addDentist" placeholder="Last Name"></input>
-                    <input type="text" name="addDentist" placeholder="Email"></input>
-                    <input type="text" name="addDentist" placeholder="Phone number"></input>
-                    <button>Submit</button>
+                    <input type="text" name="firstName" placeholder="First Name" value={dentistPersonToAdd.firstName} onChange={handleChangeAddDentist}></input>
+                    <input type="text" name="lastName" placeholder="Last Name" value={dentistPersonToAdd.lastName} onChange={handleChangeAddDentist}></input>
+                    <input type="text" name="email" placeholder="Email" value={dentistPersonToAdd.email} onChange={handleChangeAddDentist}></input>
+                    <input type="text" name="phoneNumber" placeholder="Phone number" value={dentistPersonToAdd.phoneNumber} onChange={handleChangeAddDentist}></input>
+                    <button onClick={() => addDentist(dentistPersonToAdd)}>Submit</button>
                 </div>
             </div>
 
@@ -53,23 +125,27 @@ function Form({ appointments, addPatient, makeSick }) {
 
                 <div>
                     <h3>Sickness notification patient</h3>
-                    <select type="select" name="sick" placeholder="sick">
+                    <select type="select" name="sick" placeholder="sick" onChange={handleChangePatient}>
                         {appointments.map(appointment => (
-                            <option key={appointment.patient.id} id={appointment.patient.id}>{appointment.patient.firstName + " " + appointment.patient.lastName}</option>
+                            <option
+                                key={appointment.patient.id}
+                                id={appointment.patient.id}>
+                                {appointment.patient.firstName + " " + appointment.patient.lastName}
+                            </option>
                         ))}
                     </select>
-                    <button /* onClick={makeSick}*/ >Submit</button>
+                    <button onClick={() => makePatientSick(patient)}>Submit</button>
                 </div>
 
                 <br />
 
                 <div>
                     <h3>Add Patient</h3>
-                    <input type="text" name="addPatient" placeholder="First Name"></input>
-                    <input type="text" name="addPatient" placeholder="Last Name"></input>
-                    <input type="text" name="addPatient" placeholder="Email"></input>
-                    <input type="text" name="addPatient" placeholder="Phone number"></input>
-                    <button onClick={addPatient}>Submit</button>
+                    <input type="text" name="firstName" placeholder="First Name" value={personToAdd.firstName} onChange={handleChangeAddPerson}></input>
+                    <input type="text" name="lastName" placeholder="Last Name" value={personToAdd.lastName} onChange={handleChangeAddPerson}></input>
+                    <input type="text" name="email" placeholder="Email" value={personToAdd.email} onChange={handleChangeAddPerson}></input>
+                    <input type="text" name="phoneNumber" placeholder="Phone number" value={personToAdd.phoneNumber} onChange={handleChangeAddPerson}></input>
+                    <button onClick={() => addPatient(personToAdd)}>Submit</button>
                 </div>
             </div>
 

@@ -10,62 +10,71 @@ import generateRandomAppointments from "./utils/utils"
 
 const appointments = generateRandomAppointments(150);
 
-// const patients = appointments.patient;
 const dentists = appointments.map(appointment => appointment.dentist);
-console.log(dentists);
+const patients = appointments.map(appointment => appointment.patient);
+const assistants = appointments.map(appointment => appointment.assistant);
 
 function App() {
   const [dentist, setDentist] = useState({});
-  // let [sickPeople, setSickPeople] = useState({ dentist: [], assistant: [], patient: [] })
-  // const [patient, setPatients] = useState({ patients });
-  // const [employees, setEmployee] = useState({ appointments });
+  const [patient, setPatient] = useState({});
+  const [assistant, setAssistant] = useState({});
+  const [patientToAdd, setAddPatient] = useState({});
+  const [dentistToAdd, setAddDentist] = useState({});
 
-  const makeSick = (employee) => {
-    console.log('You clicked submit.');
-    console.log(employee);
-    console.log(employee.dentist.id);
+  const makeDentistSick = (employee) => {
+    console.log('You clicked submit.', employee, employee.dentist.id);
 
     const sickEmployee = dentists.find(dentist => dentist.id === employee.dentist.id);
     sickEmployee.sick = true;
-
     console.log(sickEmployee);
 
     setDentist({
       ...dentist,
       sickEmployee
     });
-
-    const makeRed = () => {
-      const element = document.getElementsByClassName('dentist');
-      console.log(element);
-      // element.classList.toggle('red');
-    };
-
-    if (sickEmployee.sick === true) {
-      makeRed(sickEmployee);
-    };
-
-    console.log(employee);
-
-    // setSickPeople({
-    //   ...sickPeople,
-    //   [sickPeople.dentist]: employee,
-    // });
-    // console.log(sickPeople.dentist);
   };
 
-  // const addPatient = (firstName, lastName, phoneNumber, emailAddress) => {
-  //   setPatients([
-  //     ...patients,
-  //     {
-  //       id: patients.length + 1,
-  //       firstName,
-  //       lastName,
-  //       phoneNumber,
-  //       emailAddress
-  //     }
-  //   ])
-  // }
+  const makePatientSick = (patientX) => {
+    console.log('You clicked submit.', patientX, patientX.patient.id);
+
+    const sickPatient = patients.find(patient => patient.id === patientX.patient.id);
+    sickPatient.sick = true;
+    console.log(sickPatient);
+
+    setPatient({
+      ...patient,
+      sickPatient
+    });
+  };
+
+  const makeAssistantSick = (assitantX) => {
+    console.log('You clicked submit.', assitantX, assitantX.assistant.id);
+
+    const sickAssistant = assistants.find(assistant => assistant.id === assitantX.assistant.id);
+    sickAssistant.sick = true;
+    console.log(sickAssistant);
+
+    setAssistant({
+      ...assistant,
+      sickAssistant
+    });
+  };
+
+  const addPatient = (personToAdd) => {
+    console.log(personToAdd);
+    setAddPatient({
+      ...patientToAdd,
+      personToAdd
+    });
+  };
+
+  const addDentist = (dentistPersonToAdd) => {
+    console.log(dentistPersonToAdd);
+    setAddDentist({
+      ...dentistToAdd,
+      dentistPersonToAdd
+    });
+  };
 
   return (
     < Router >
@@ -96,7 +105,7 @@ function App() {
               <Day appointments={appointments.filter(app => app.day === 1)} />
             </Route>
             <Route path="/form">
-              <Form appointments={appointments} /* addPatient={addPatient} */ makeSick={makeSick} />
+              <Form appointments={appointments} addPatient={addPatient} addDentist={addDentist} makeDentistSick={makeDentistSick} makePatientSick={makePatientSick} makeAssistantSick={makeAssistantSick} />
             </Route>
             <Route path="/">
               <Home />
