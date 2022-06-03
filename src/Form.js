@@ -11,6 +11,7 @@ function Form({ appointments, addPatient, addDentist, makeDentistSick, makePatie
         lastName: "",
         phoneNumber: "",
         email: "",
+        sick: false,
     });
 
     const [dentistPersonToAdd, setDentistPerson] = useState({
@@ -18,6 +19,7 @@ function Form({ appointments, addPatient, addDentist, makeDentistSick, makePatie
         lastName: "",
         phoneNumber: "",
         email: "",
+        sick: false,
     });
 
     const handleChangeDentist = (e) => {
@@ -154,7 +156,10 @@ function Form({ appointments, addPatient, addDentist, makeDentistSick, makePatie
             <div><h1>Changes for appointments</h1>
                 <div>
                     <h3>Add Appointment without an assistant</h3>
-                    <input type="text" name="addAppointment" placeholder="addAppointment"></input>
+                    <input type="text" name="day" placeholder="Day"></input>
+                    <input type="text" name="time" placeholder="Time"></input>
+                    <input type="text" name="patient" placeholder="Patient"></input>
+                    <input type="text" name="dentist" placeholder="Dentist"></input>
                     <button>Submit</button>
                 </div>
 
@@ -162,7 +167,11 @@ function Form({ appointments, addPatient, addDentist, makeDentistSick, makePatie
 
                 <div>
                     <h3>Add Appointment with an assistant</h3>
-                    <input type="text" name="addAppointment" placeholder="addAppointment"></input>
+                    <input type="text" name="day" placeholder="Day"></input>
+                    <input type="text" name="time" placeholder="Time"></input>
+                    <input type="text" name="patient" placeholder="Patient"></input>
+                    <input type="text" name="dentist" placeholder="Dentist"></input>
+                    <input type="text" name="assistant" placeholder="Assistant"></input>
                     <button>Submit</button>
                 </div>
 
@@ -170,7 +179,15 @@ function Form({ appointments, addPatient, addDentist, makeDentistSick, makePatie
 
                 <div>
                     <h3>Delete Appointment</h3>
-                    <input type="text" name="deleteAppointment" placeholder="deleteAppointment"></input>
+                    <select type="select" name="deleteAppointment" placeholder="deleteAppointment">
+                        {appointments.map(appointment => (
+                            <option
+                                key={appointment.patient.id}
+                                id={appointment.patient.id}>
+                                {"Day: " + appointment.day + " " + "Time: " + appointment.time + " " + appointment.patient.firstName + " " + appointment.patient.lastName}
+                            </option>
+                        ))}
+                    </select>
                     <button>Submit</button>
                 </div>
 
